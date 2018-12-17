@@ -10,40 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_17_093855) do
+ActiveRecord::Schema.define(version: 2016_01_13_203742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "companies", force: :cascade do |t|
-    t.string "name"
+  create_table "companies", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "products", force: :cascade do |t|
-    t.string "sku"
-    t.string "description"
-    t.integer "company_id"
+  create_table "products", id: :serial, force: :cascade do |t|
+    t.string "sku", null: false
+    t.string "description", null: false
+    t.integer "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "shipment_products", force: :cascade do |t|
-    t.integer "product_id"
-    t.integer "shipment_id"
-    t.integer "quantity"
+  create_table "shipment_products", id: :serial, force: :cascade do |t|
+    t.integer "product_id", null: false
+    t.integer "shipment_id", null: false
+    t.integer "quantity", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "shipments", force: :cascade do |t|
-    t.string "name"
-    t.integer "company_id"
-    t.string "international_transportation_mode"
-    t.date "international_departure_date"
+  create_table "shipments", id: :serial, force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "company_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "international_transportation_mode", null: false
+    t.date "international_departure_date", null: false
+    t.index ["company_id"], name: "index_shipments_on_company_id"
   end
 
 end
