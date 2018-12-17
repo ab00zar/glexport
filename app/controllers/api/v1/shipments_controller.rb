@@ -1,9 +1,9 @@
 module Api
   module V1
-    class ArticlesController < ApplicationController
+    class ShipmentsController < ApplicationController
       def index
-        @shipments = Shipment.all
-        render json: {data: @shipments}, status: :ok
+        shipments = Shipment.all
+        render json: {status: 'Success', data: shipments}, status: :ok
       end
     end
   end
