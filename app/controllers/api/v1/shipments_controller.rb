@@ -8,7 +8,9 @@ module Api
         if !params[:international_transportation_mode].blank?
           shipments = shipments.where(international_transportation_mode: params[:international_transportation_mode])
         end
-        
+
+        shipments = shipments.page(params[:page]).per(params[:per])
+
         render json: {records: JsonMaker::Jsonmkr.new.records(shipments)}
       end
 
