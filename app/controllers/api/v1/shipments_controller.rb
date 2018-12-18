@@ -2,6 +2,7 @@ module Api
   module V1
     class ShipmentsController < ApplicationController
 
+      #index method generates proper results
       def index
         return unprocessable if params[:company_id].blank?
 
@@ -12,9 +13,11 @@ module Api
 
         shipments = shipments.pagination(params[:page], params[:per])
 
+        #JsonMaker service is used to generate Json
         render json: {records: JsonMaker::Jsonmkr.new.records(shipments)}
       end
-      
+
+      #This method handles invalid params
       def unprocessable
         render json: {errors: ['company_id is required']}, status: 422
       end

@@ -7,7 +7,7 @@ class Shipment < ApplicationRecord
   scope :filters, -> (mode) {where(international_transportation_mode: mode)}
   scope :pagination, ->(page, per) {page(page).per(per)}
 
-
+  #This method generates the sort command using params to be used by order
   def self.sort_command(field, direction)
     field = field.blank? ? 'id' : field
     direction = direction.blank? ? 'ASC' : direction
