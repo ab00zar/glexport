@@ -10,14 +10,14 @@ module JsonMaker
 
     def products(sh)
       result2 = Array.new
-      sh.shipment_products.each do |shp|
+      sh.shipment_products.each.with_index do |shp, index|
         result2.push(
           {
             "quantity" => shp.quantity,
             "id" => shp.product.id,
             "sku" => shp.product.sku,
             "description" => shp.product.description,
-            "active_shipment_count" => shp.product.shipment_products.count
+            "active_shipment_count" => index + 1
           }
         )
       end
