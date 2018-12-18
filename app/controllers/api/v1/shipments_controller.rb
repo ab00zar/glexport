@@ -3,6 +3,7 @@ module Api
     class ShipmentsController < ApplicationController
 
       def index
+        return unprocessable if params[:company_id].blank?
         shipments = Shipment.where(company_id: params[:company_id]).order(sorting)
 
         if !params[:international_transportation_mode].blank?
@@ -18,6 +19,10 @@ module Api
         field = params[:sort].blank? ? 'id' : params[:sort]
         direction = params[:direction].blank? ? 'ASC' : params[:direction]
         "#{field} #{direction}"
+      end
+
+      def unprocessable
+        render json: {errors: ['company_id is required']}, status: 422
       end
 
     end
