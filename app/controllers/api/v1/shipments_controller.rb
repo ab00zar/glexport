@@ -6,20 +6,20 @@ module Api
       def index
         return unprocessable if params[:company_id].blank?
 
-        shipments = Shipment.where(company_id: params[:company_id]).sorting(params[:sort], params[:direction])
-
-        shipments = shipments.filters(params[:international_transportation_mode]) if
-            !params[:international_transportation_mode].blank?
-
-        shipments = shipments.pagination(params[:page], params[:per])
+        shipments = Shipment.question(questioning_params(params)).sorting(params[:sort], params[:direction])
 
         #JsonMaker service is used to generate Json
         render json: {records: JsonMaker::Jsonmkr.new.records(shipments)}
       end
 
+      private
       #This method handles invalid params
       def unprocessable
         render json: {errors: ['company_id is required']}, status: 422
+      end
+
+      def questioning_params(params)
+        params.slice(:company_id, :international_transportation_mode, :page, :per)
       end
 
     end
