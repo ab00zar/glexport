@@ -6,10 +6,10 @@ module Api
       def index
         return unprocessable if params[:company_id].blank?
 
-        shipments = Shipment.question(questioning_params(params)).sorting(params[:sort], params[:direction])
+        @shipments = Shipment.question(questioning_params(params)).sorting(params[:sort], params[:direction])
 
         #JsonMaker service is used to generate Json
-        render json: {records: JsonMaker::Jsonmkr.new.records(shipments)}
+        #render json: {records: JsonMaker::Jsonmkr.new.records(shipments)}
       end
 
       private
